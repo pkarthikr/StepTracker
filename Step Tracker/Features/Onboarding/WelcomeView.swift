@@ -32,12 +32,12 @@ struct WelcomeView: View {
                 .ignoresSafeArea()
 
             VStack(spacing: 0) {
-                // Logo
+                // Logo - close to safe area
                 Text("Stept")
                     .font(.custom("YoungSerif-Regular", size: 22))
                     .foregroundStyle(Color(red: 0.086, green: 0.075, blue: 0.055))
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.top, 60)
+                    .padding(.top, 16)
                     .padding(.horizontal, 24)
 
                 // Hero Section - Centered with flex
@@ -122,7 +122,7 @@ struct WelcomeView: View {
                 .padding(.bottom, 14)
 
                 // CTA Section
-                VStack(spacing: 14) {
+                VStack(spacing: 4) {
                     Button(action: {}) {
                         HStack(spacing: 12) {
                             Image(systemName: "apple.logo")

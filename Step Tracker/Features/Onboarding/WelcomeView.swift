@@ -144,7 +144,7 @@ struct WelcomeView: View {
                     .frame(maxWidth: .infinity)
                 }
                 .padding(.horizontal, 24)
-                .padding(.bottom, 40)
+                .padding(.bottom, 60)
             }
         }
         .onAppear {

@@ -9,6 +9,10 @@ import SwiftUI
 
 @main
 struct Step_TrackerApp: App {
+    init() {
+        registerCustomFonts()
+    }
+
     var body: some Scene {
         WindowGroup {
             ContentView()

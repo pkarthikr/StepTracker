@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import UIKit
 
 func registerCustomFonts() {
     let fontNames = ["Figtree-Bold.ttf", "Figtree-Regular.ttf", "YoungSerif-Regular.ttf"]
@@ -33,55 +32,28 @@ struct WelcomeView: View {
                 .ignoresSafeArea()
 
             VStack(spacing: 0) {
-                // Header - at the top
-                HStack {
-                    HStack(spacing: 8) {
-                        Image(systemName: "figure.walk")
-                            .font(.system(size: 16, weight: .semibold))
-                            .foregroundStyle(.white)
-                            .frame(width: 28, height: 28)
-                            .background(
-                                LinearGradient(
-                                    gradient: Gradient(colors: [accentColor, accentColor.opacity(0.7)]),
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                )
-                            )
-                            .cornerRadius(8)
+                // Logo - close to safe area
+                Text("Stept")
+                    .font(.custom("YoungSerif-Regular", size: 22))
+                    .foregroundStyle(Color(red: 0.086, green: 0.075, blue: 0.055))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.top, 16)
+                    .padding(.horizontal, 24)
 
-                        Text("Stept")
-                            .font(.custom("YoungSerif-Regular", size: 22))
-                            .foregroundStyle(Color(red: 0.086, green: 0.075, blue: 0.055))
-                    }
-
+                // Hero Section - Centered with flex
+                VStack(spacing: 0) {
                     Spacer()
-                }
-                .padding(.horizontal, 24)
-                .padding(.top, 16)
-                .padding(.bottom, 40)
 
-                // Hero Section
-                VStack(spacing: 32) {
-                    // Animated Circle with Icon and Badges
-                    ZStack(alignment: .center) {
+                    ZStack {
                         // Main Circle
                         Circle()
-                            .fill(
-                                LinearGradient(
-                                    gradient: Gradient(colors: [
-                                        accentColor,
-                                        accentColor.opacity(0.8)
-                                    ]),
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                )
-                            )
-                            .frame(width: 240, height: 240)
-                            .shadow(color: Color.black.opacity(0.08), radius: 20, x: 0, y: 20)
+                            .fill(accentColor)
+                            .frame(width: 206, height: 206)
+                            .shadow(color: Color.black.opacity(0.06), radius: 10, x: 0, y: 4)
 
-                        // Hero Icon with pulse animation
+                        // Hero Icon - Sneaker with pulse animation
                         Image(systemName: "figure.walk")
-                            .font(.system(size: 120, weight: .semibold))
+                            .font(.system(size: 98, weight: .semibold))
                             .foregroundStyle(.white)
                             .opacity(isAnimating ? 0.7 : 1.0)
                             .animation(
@@ -90,79 +62,70 @@ struct WelcomeView: View {
                                 value: isAnimating
                             )
 
-                        // Step Badge (Top Left)
-                        VStack(spacing: 0) {
-                            HStack(spacing: 8) {
-                                Image(systemName: "figure.walk")
-                                    .font(.system(size: 18, weight: .semibold))
-                                    .foregroundStyle(Color(red: 0.122, green: 0.616, blue: 0.416))
+                        // Step Badge (Top-left)
+                        HStack(spacing: 8) {
+                            Image(systemName: "figure.walk")
+                                .font(.system(size: 18, weight: .semibold))
+                                .foregroundStyle(Color(red: 0.122, green: 0.616, blue: 0.416))
 
-                                Text("12,438")
-                                    .font(.custom("Figtree-Bold", size: 13))
-                                    .foregroundStyle(Color(red: 0.086, green: 0.075, blue: 0.055))
-                            }
-                            .padding(.vertical, 10)
-                            .padding(.horizontal, 16)
-                            .background(Color(.white))
-                            .cornerRadius(999)
-                            .shadow(color: Color.black.opacity(0.06), radius: 10, x: 0, y: 4)
+                            Text("12,438")
+                                .font(.custom("Figtree-Bold", size: 13))
+                                .foregroundStyle(Color(red: 0.086, green: 0.075, blue: 0.055))
                         }
-                        .offset(x: -128, y: -130)
-                        .offset(y: isAnimating ? -8 : 0)
-                        .animation(
-                            Animation.easeInOut(duration: 3)
-                                .repeatForever(autoreverses: true)
-                                .delay(0),
-                            value: isAnimating
-                        )
+                        .padding(.vertical, 9)
+                        .padding(.horizontal, 14)
+                        .background(Color(.white))
+                        .cornerRadius(999)
+                        .shadow(color: Color.black.opacity(0.06), radius: 10, x: 0, y: 4)
+                        .offset(x: -120, y: -130)
 
-                        // Pool Badge (Bottom Right)
-                        VStack(spacing: 0) {
-                            HStack(spacing: 8) {
-                                Image(systemName: "trophy.fill")
-                                    .font(.system(size: 18, weight: .semibold))
-                                    .foregroundStyle(accentColor)
+                        // Pool Badge (Bottom-right)
+                        HStack(spacing: 8) {
+                            Image(systemName: "trophy.fill")
+                                .font(.system(size: 18, weight: .semibold))
+                                .foregroundStyle(accentColor)
 
-                                Text("$120 pool")
-                                    .font(.custom("Figtree-Bold", size: 13))
-                                    .foregroundStyle(Color(red: 0.992, green: 0.980, blue: 0.964))
-                            }
-                            .padding(.vertical, 10)
-                            .padding(.horizontal, 16)
-                            .background(Color(red: 0.086, green: 0.075, blue: 0.055))
-                            .cornerRadius(999)
-                            .shadow(color: Color.black.opacity(0.06), radius: 10, x: 0, y: 4)
+                            Text("$120 pool")
+                                .font(.custom("Figtree-Bold", size: 13))
+                                .foregroundStyle(Color(red: 0.992, green: 0.980, blue: 0.964))
                         }
-                        .offset(x: 128, y: 116)
-                        .offset(y: isAnimating ? 8 : 0)
-                        .animation(
-                            Animation.easeInOut(duration: 3)
-                                .repeatForever(autoreverses: true)
-                                .delay(0),
-                            value: isAnimating
-                        )
+                        .padding(.vertical, 9)
+                        .padding(.horizontal, 14)
+                        .background(Color(red: 0.086, green: 0.075, blue: 0.055))
+                        .cornerRadius(999)
+                        .shadow(color: Color.black.opacity(0.06), radius: 10, x: 0, y: 4)
+                        .offset(x: 120, y: 116)
                     }
-                    .frame(height: 280)
+                    .frame(width: 250, height: 250)
 
-                    // Headline and Description
-                    VStack(spacing: 12) {
-                        Text("Turn your steps into stakes")
-                            .font(.custom("YoungSerif-Regular", size: 34))
-                            .foregroundStyle(Color(red: 0.086, green: 0.075, blue: 0.055))
-                            .lineLimit(3)
-
-                        Text("Walk more, earn more. Challenge friends and compete for real rewards.")
-                            .font(.custom("Figtree-Regular", size: 15))
-                            .foregroundStyle(Color(red: 0.420, green: 0.388, blue: 0.329))
-                            .lineLimit(3)
-                    }
-                    .multilineTextAlignment(.center)
-                    .frame(maxWidth: 280)
+                    Spacer()
                 }
                 .frame(maxHeight: .infinity)
+                .padding(.bottom, 40)
+
+                // Headline and Description
+                VStack(spacing: 14) {
+                    Text("Turn your steps into stakes")
+                        .font(.custom("YoungSerif-Regular", size: 36))
+                        .fontWeight(.bold)
+                        .foregroundStyle(Color(red: 0.086, green: 0.075, blue: 0.055))
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .lineSpacing(-2)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+
+                    Text("Challenge your friends, pool a little cash, and let your daily walk decide who takes it all.")
+                        .font(.custom("Figtree-Regular", size: 17))
+                        .foregroundStyle(Color(red: 0.231, green: 0.212, blue: 0.173))
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .padding(.horizontal, 24)
+                .padding(.bottom, 16)
 
                 // CTA Section
-                VStack(spacing: 12) {
+                VStack(spacing: 16) {
                     Button(action: {}) {
                         HStack(spacing: 12) {
                             Image(systemName: "apple.logo")
@@ -174,18 +137,18 @@ struct WelcomeView: View {
                         .frame(height: 52)
                         .foregroundStyle(.white)
                         .background(Color(red: 0.086, green: 0.075, blue: 0.055))
-                        .cornerRadius(12)
+                        .cornerRadius(10)
+                        .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(red: 0.086, green: 0.075, blue: 0.055), lineWidth: 2))
                     }
 
                     TermsAndConditions(
                         termsURL: URL(string: "https://example.com/terms")!,
                         privacyURL: URL(string: "https://example.com/privacy")!
                     )
-                    .padding(.top, 8)
+                    .frame(maxWidth: .infinity)
                 }
                 .padding(.horizontal, 24)
             }
-            .padding(.bottom, 32)
         }
         .onAppear {
             isAnimating = true

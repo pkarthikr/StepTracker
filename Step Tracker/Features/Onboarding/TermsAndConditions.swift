@@ -20,7 +20,7 @@ struct TermsAndConditions: View {
     }
 
     private var attributedString: AttributedString {
-        let markdown = "By signing in, you agree to our [Terms of Service](\(termsURL.absoluteString)) and [Privacy Policy](\(privacyURL.absoluteString))."
+        let markdown = "By continuing, you agree to our [Terms](\(termsURL.absoluteString)) and [Privacy Policy](\(privacyURL.absoluteString))."
         return (try? AttributedString(markdown: markdown)) ?? AttributedString(markdown.replacingOccurrences(of: "[", with: "").replacingOccurrences(of: "]", with: ""))
 
     }

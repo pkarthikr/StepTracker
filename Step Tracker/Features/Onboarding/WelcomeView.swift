@@ -101,6 +101,7 @@ struct WelcomeView: View {
                     Spacer()
                 }
                 .frame(maxHeight: .infinity)
+                .padding(.bottom, 16)
 
                 // Headline and Description
                 VStack(spacing: 14) {

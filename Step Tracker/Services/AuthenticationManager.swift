@@ -7,6 +7,7 @@
 
 import AuthenticationServices
 import SwiftUI
+import Combine
 
 #if canImport(UIKit)
 import UIKit
@@ -65,11 +66,11 @@ class AuthenticationManager: NSObject, ObservableObject, ASAuthorizationControll
         #if canImport(UIKit)
         guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
               let window = windowScene.windows.first else {
-            return ASPresentationAnchor()
+            fatalError("Unable to find presentation anchor")
         }
         return window
         #else
-        return ASPresentationAnchor()
+        fatalError("Unable to find presentation anchor")
         #endif
     }
 

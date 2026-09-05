@@ -122,7 +122,7 @@ struct WelcomeView: View {
                 .padding(.bottom, 16)
 
                 // CTA Section
-                VStack(spacing: 4) {
+                VStack(spacing: 16) {
                     Button(action: {}) {
                         HStack(spacing: 12) {
                             Image(systemName: "apple.logo")
@@ -144,7 +144,7 @@ struct WelcomeView: View {
                     .frame(maxWidth: .infinity)
                 }
                 .padding(.horizontal, 24)
-                .padding(.bottom, 24)
+                .padding(.bottom, 40)
             }
         }
         .onAppear {

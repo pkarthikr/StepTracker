@@ -7,6 +7,10 @@
 
 import SwiftUI
 
+// Design System Tokens
+// Note: These are imported via the individual modules, not aggregated imports
+// This allows Xcode to properly resolve the types and enable code completion
+
 func registerCustomFonts() {
     let fontNames = ["Figtree-Bold.ttf", "Figtree-Regular.ttf", "YoungSerif-Regular.ttf"]
     for fontName in fontNames {
@@ -23,24 +27,25 @@ func registerCustomFonts() {
 
 struct WelcomeView: View {
     @State private var isAnimating = false
+    @ObservedObject var authManager: AuthenticationManager
 
     let accentColor: Color = .sky
 
     var body: some View {
         ZStack {
-            Color(.white)
+            Color.surfaceCard
                 .ignoresSafeArea()
 
             VStack(spacing: 0) {
-                // Logo - close to safe area
+                // Logo
                 Text("Stept")
-                    .font(.custom("YoungSerif-Regular", size: 22))
-                    .foregroundStyle(Color(red: 0.086, green: 0.075, blue: 0.055))
+                    .font(.titleText)
+                    .foregroundStyle(Color.textStrong)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.top, 16)
-                    .padding(.horizontal, 24)
+                    .padding(.top, Spacing.space4)
+                    .padding(.horizontal, Spacing.space6)
 
-                // Hero Section - Centered with flex
+                // Hero Section
                 VStack(spacing: 0) {
                     Spacer()
 
@@ -49,51 +54,47 @@ struct WelcomeView: View {
                         Circle()
                             .fill(accentColor)
                             .frame(width: 206, height: 206)
-                            .shadow(color: Color.black.opacity(0.06), radius: 10, x: 0, y: 4)
+                            .cardShadow()
 
-                        // Hero Icon - Sneaker with pulse animation
+                        // Hero Icon - Pulse animation
                         Image(systemName: "figure.walk")
                             .font(.system(size: 98, weight: .semibold))
                             .foregroundStyle(.white)
                             .opacity(isAnimating ? 0.7 : 1.0)
-                            .animation(
-                                Animation.easeInOut(duration: 2)
-                                    .repeatForever(autoreverses: true),
-                                value: isAnimating
-                            )
+                            .animation(AnimationPreset.pulse(), value: isAnimating)
 
                         // Step Badge (Top-left)
-                        HStack(spacing: 8) {
+                        HStack(spacing: Spacing.space2) {
                             Image(systemName: "figure.walk")
                                 .font(.system(size: 18, weight: .semibold))
-                                .foregroundStyle(Color(red: 0.122, green: 0.616, blue: 0.416))
+                                .foregroundStyle(Color.success)
 
                             Text("12,438")
-                                .font(.custom("Figtree-Bold", size: 13))
-                                .foregroundStyle(Color(red: 0.086, green: 0.075, blue: 0.055))
+                                .font(.labelSmallText)
+                                .foregroundStyle(Color.textStrong)
                         }
                         .padding(.vertical, 9)
                         .padding(.horizontal, 14)
-                        .background(Color(.white))
-                        .cornerRadius(999)
-                        .shadow(color: Color.black.opacity(0.06), radius: 10, x: 0, y: 4)
+                        .background(Color.surfaceCard)
+                        .cornerRadius(BorderRadius.pill)
+                        .cardShadow()
                         .offset(x: -120, y: -130)
 
                         // Pool Badge (Bottom-right)
-                        HStack(spacing: 8) {
+                        HStack(spacing: Spacing.space2) {
                             Image(systemName: "trophy.fill")
                                 .font(.system(size: 18, weight: .semibold))
                                 .foregroundStyle(accentColor)
 
                             Text("$120 pool")
-                                .font(.custom("Figtree-Bold", size: 13))
-                                .foregroundStyle(Color(red: 0.992, green: 0.980, blue: 0.964))
+                                .font(.labelSmallText)
+                                .foregroundStyle(Color.textInverse)
                         }
                         .padding(.vertical, 9)
                         .padding(.horizontal, 14)
-                        .background(Color(red: 0.086, green: 0.075, blue: 0.055))
-                        .cornerRadius(999)
-                        .shadow(color: Color.black.opacity(0.06), radius: 10, x: 0, y: 4)
+                        .background(Color.textStrong)
+                        .cornerRadius(BorderRadius.pill)
+                        .cardShadow()
                         .offset(x: 120, y: 116)
                     }
                     .frame(width: 250, height: 250)
@@ -101,44 +102,64 @@ struct WelcomeView: View {
                     Spacer()
                 }
                 .frame(maxHeight: .infinity)
-                .padding(.bottom, 40)
+                .padding(.bottom, Spacing.space10)
 
                 // Headline and Description
-                VStack(spacing: 14) {
+                VStack(spacing: Spacing.space3) {
                     Text("Turn your steps into stakes")
-                        .font(.custom("YoungSerif-Regular", size: 36))
+                        .font(.heroText)
                         .fontWeight(.bold)
-                        .foregroundStyle(Color(red: 0.086, green: 0.075, blue: 0.055))
+                        .foregroundStyle(Color.textStrong)
                         .lineLimit(nil)
                         .fixedSize(horizontal: false, vertical: true)
                         .lineSpacing(-2)
                         .frame(maxWidth: .infinity, alignment: .leading)
 
                     Text("Challenge your friends, pool a little cash, and let your daily walk decide who takes it all.")
-                        .font(.custom("Figtree-Regular", size: 17))
-                        .foregroundStyle(Color(red: 0.231, green: 0.212, blue: 0.173))
+                        .font(.bodyLargeText)
+                        .foregroundStyle(Color.textBody)
                         .lineLimit(nil)
                         .fixedSize(horizontal: false, vertical: true)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                .padding(.horizontal, 24)
-                .padding(.bottom, 16)
+                .padding(.horizontal, Spacing.space6)
+                .padding(.bottom, Spacing.space4)
+
+                // Error Message
+                if let error = authManager.errorMessage {
+                    HStack(spacing: Spacing.space3) {
+                        Image(systemName: "exclamationmark.circle.fill")
+                            .foregroundStyle(Color.danger)
+                        Text(error)
+                            .font(.bodySmallText)
+                            .foregroundStyle(Color.danger)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.vertical, Spacing.space3)
+                    .padding(.horizontal, Spacing.space4)
+                    .background(Color.surfaceRaised)
+                    .cornerRadius(BorderRadius.small)
+                    .padding(.horizontal, Spacing.space6)
+                    .padding(.bottom, Spacing.space4)
+                }
 
                 // CTA Section
-                VStack(spacing: 16) {
-                    Button(action: {}) {
+                VStack(spacing: Spacing.space4) {
+                    Button(action: {
+                        authManager.signInWithApple()
+                    }) {
                         HStack(spacing: 12) {
                             Image(systemName: "apple.logo")
                                 .font(.system(size: 20, weight: .semibold))
                             Text("Sign in with Apple")
-                                .font(.custom("Figtree-Bold", size: 15))
+                                .font(.labelText)
                         }
                         .frame(maxWidth: .infinity)
-                        .frame(height: 52)
+                        .frame(height: MeasurementTokens.controlHeight)
                         .foregroundStyle(.white)
-                        .background(Color(red: 0.086, green: 0.075, blue: 0.055))
-                        .cornerRadius(10)
-                        .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(red: 0.086, green: 0.075, blue: 0.055), lineWidth: 2))
+                        .background(Color.textStrong)
+                        .cornerRadius(BorderRadius.small)
+                        .overlay(RoundedRectangle(cornerRadius: BorderRadius.small).stroke(Color.textStrong, lineWidth: 2))
                     }
 
                     TermsAndConditions(
@@ -147,7 +168,7 @@ struct WelcomeView: View {
                     )
                     .frame(maxWidth: .infinity)
                 }
-                .padding(.horizontal, 24)
+                .padding(.horizontal, Spacing.space6)
             }
         }
         .onAppear {
@@ -155,16 +176,6 @@ struct WelcomeView: View {
         }
     }
 }
-
-// MARK: - Color Extension for Accent Colors
-extension Color {
-    static let sky = Color(red: 0.239, green: 0.561, blue: 0.816)
-    static let leaf = Color(red: 0.122, green: 0.616, blue: 0.416)
-    static let berry = Color(red: 0.424, green: 0.290, blue: 0.714)
-    static let tomato = Color(red: 0.910, green: 0.333, blue: 0.247)
-    static let yolk = Color(red: 1.0, green: 0.761, blue: 0.200)
-}
-
 #Preview {
-    WelcomeView()
+    WelcomeView(authManager: AuthenticationManager())
 }

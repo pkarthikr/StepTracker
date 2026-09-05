@@ -119,7 +119,7 @@ struct WelcomeView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .padding(.horizontal, 24)
-                .padding(.bottom, 24)
+                .padding(.bottom, 16)
 
                 // CTA Section
                 VStack(spacing: 4) {
@@ -144,7 +144,7 @@ struct WelcomeView: View {
                     .frame(maxWidth: .infinity)
                 }
                 .padding(.horizontal, 24)
-                .padding(.bottom, 5)
+                .padding(.bottom, 24)
             }
         }
         .onAppear {

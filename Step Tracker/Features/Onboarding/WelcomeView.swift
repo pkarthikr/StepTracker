@@ -138,6 +138,7 @@ struct WelcomeView: View {
                         .foregroundStyle(.white)
                         .background(Color(red: 0.086, green: 0.075, blue: 0.055))
                         .cornerRadius(10)
+                        .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(red: 0.086, green: 0.075, blue: 0.055), lineWidth: 2))
                     }
 
                     TermsAndConditions(

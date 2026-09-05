@@ -109,14 +109,15 @@ struct WelcomeView: View {
                         .foregroundStyle(Color(red: 0.086, green: 0.075, blue: 0.055))
                         .lineLimit(nil)
                         .fixedSize(horizontal: false, vertical: true)
+                        .frame(maxWidth: .infinity, alignment: .leading)
 
                     Text("Challenge your friends, pool a little cash, and let your daily walk decide who takes it all.")
                         .font(.custom("Figtree-Regular", size: 17))
                         .foregroundStyle(Color(red: 0.231, green: 0.212, blue: 0.173))
                         .lineLimit(nil)
                         .fixedSize(horizontal: false, vertical: true)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                .frame(maxWidth: .infinity, alignment: .center)
                 .padding(.horizontal, 24)
                 .padding(.bottom, 14)
 

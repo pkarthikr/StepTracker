@@ -101,15 +101,17 @@ struct WelcomeView: View {
                     Spacer()
                 }
                 .frame(maxHeight: .infinity)
-                .padding(.bottom, 16)
+                .padding(.bottom, 40)
 
                 // Headline and Description
                 VStack(spacing: 14) {
                     Text("Turn your steps into stakes")
-                        .font(.custom("YoungSerif-Regular", size: 34))
+                        .font(.custom("YoungSerif-Regular", size: 36))
+                        .fontWeight(.bold)
                         .foregroundStyle(Color(red: 0.086, green: 0.075, blue: 0.055))
                         .lineLimit(nil)
                         .fixedSize(horizontal: false, vertical: true)
+                        .lineSpacing(-2)
                         .frame(maxWidth: .infinity, alignment: .leading)
 
                     Text("Challenge your friends, pool a little cash, and let your daily walk decide who takes it all.")
@@ -145,7 +147,6 @@ struct WelcomeView: View {
                     .frame(maxWidth: .infinity)
                 }
                 .padding(.horizontal, 24)
-                .padding(.bottom, 40)
             }
         }
         .onAppear {

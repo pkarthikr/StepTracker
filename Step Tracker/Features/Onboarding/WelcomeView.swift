@@ -180,7 +180,7 @@ struct WelcomeView: View {
                 // Pages Container
                 ZStack {
                     TabView(selection: $currentPage) {
-                        // Page 0 - Launch
+                        // Page 0 - Race your friends
                         VStack(spacing: Spacing.space6) {
                             Spacer().frame(height: Spacing.space3)
                             LeaderboardCard().padding(.horizontal, Spacing.space6)
@@ -194,21 +194,7 @@ struct WelcomeView: View {
                         }
                         .tag(0)
 
-                        // Page 1a - Race your friends
-                        VStack(spacing: Spacing.space6) {
-                            Spacer().frame(height: Spacing.space3)
-                            LeaderboardCard().padding(.horizontal, Spacing.space6)
-                            Spacer()
-                            VStack(spacing: Spacing.space4) {
-                                Text("Race your friends").font(.heroText).fontWeight(.bold).foregroundStyle(Color.textStrong)
-                                Text("Set up a challenge with your crew and watch the leaderboard shuffle every time someone moves.").font(.bodyLargeText).foregroundStyle(Color.textBody).lineLimit(nil).fixedSize(horizontal: false, vertical: true)
-                            }
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.horizontal, Spacing.space6)
-                        }
-                        .tag(1)
-
-                        // Page 1b - Steps that count
+                        // Page 1 - Steps that count
                         VStack(spacing: Spacing.space6) {
                             Spacer().frame(height: Spacing.space3)
                             StepCountDisplay().padding(.horizontal, Spacing.space6)
@@ -220,9 +206,9 @@ struct WelcomeView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.horizontal, Spacing.space6)
                         }
-                        .tag(2)
+                        .tag(1)
 
-                        // Page 1c - Winner takes the pot
+                        // Page 2 - Winner takes the pot
                         VStack(spacing: Spacing.space6) {
                             Spacer().frame(height: Spacing.space3)
                             PoolCard().padding(.horizontal, Spacing.space6)
@@ -234,7 +220,7 @@ struct WelcomeView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.horizontal, Spacing.space6)
                         }
-                        .tag(3)
+                        .tag(2)
                     }
                     .tabViewStyle(.page(indexDisplayMode: .never))
                     .indexViewStyle(.page(backgroundDisplayMode: .never))

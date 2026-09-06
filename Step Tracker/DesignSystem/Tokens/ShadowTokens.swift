@@ -1,7 +1,7 @@
 import SwiftUI
 
 enum ShadowToken {
-    static let card = (color: Color.black.opacity(0.06), radius: CGFloat(10), x: CGFloat(0), y: CGFloat(4))
+    static let card = (color: Color.black.opacity(0.12), radius: CGFloat(16), x: CGFloat(0), y: CGFloat(8))
 }
 
 extension View {

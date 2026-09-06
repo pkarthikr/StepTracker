@@ -250,7 +250,8 @@ struct WelcomeView: View {
                             .frame(width: 8, height: 8)
                     }
                 }
-                .padding(.bottom, Spacing.space6)
+                .padding(.top, Spacing.space6)
+                .padding(.bottom, Spacing.space4)
 
                 // CTA Section
                 VStack(spacing: Spacing.space4) {

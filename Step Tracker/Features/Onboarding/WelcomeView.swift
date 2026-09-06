@@ -159,7 +159,6 @@ struct PoolCard: View {
 // MARK: - Welcome View
 struct WelcomeView: View {
     @State private var currentPage: Int = 0
-    @State private var logoAnimating = false
     @ObservedObject var authManager: AuthenticationManager
 
     let accentColor: Color = .sky
@@ -169,16 +168,13 @@ struct WelcomeView: View {
             Color.surfaceCard.ignoresSafeArea()
 
             VStack(spacing: 0) {
-                // Logo - settles at top
+                // Logo
                 Text("Stept")
                     .font(.titleText)
                     .foregroundStyle(Color.textStrong)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.top, Spacing.space4)
                     .padding(.horizontal, Spacing.space6)
-                    .offset(x: logoAnimating ? 0 : 104, y: logoAnimating ? 0 : 318)
-                    .scaleEffect(logoAnimating ? 1 : 2.6)
-                    .animation(Animation.easeInOut(duration: 4.8).repeatForever(autoreverses: false), value: logoAnimating)
                     .padding(.bottom, Spacing.space6)
 
                 // Pages Container
@@ -291,9 +287,6 @@ struct WelcomeView: View {
                 .padding(.horizontal, Spacing.space6)
                 .padding(.vertical, Spacing.space4)
             }
-        }
-        .onAppear {
-            logoAnimating = true
         }
     }
 }

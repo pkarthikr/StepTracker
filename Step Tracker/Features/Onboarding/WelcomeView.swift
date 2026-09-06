@@ -21,6 +21,22 @@ func registerCustomFonts() {
     }
 }
 
+// MARK: - Page Indicator Badge Component
+struct PageIndicatorBadge: View {
+    let number: String
+    let isActive: Bool
+
+    var body: some View {
+        Text(number)
+            .font(.labelSmallText)
+            .fontWeight(.bold)
+            .foregroundStyle(.white)
+            .frame(width: 32, height: 32)
+            .background(isActive ? Color.sky : Color.textStrong)
+            .cornerRadius(BorderRadius.small)
+    }
+}
+
 // MARK: - Leaderboard Card Component
 struct LeaderboardCard: View {
     var body: some View {
@@ -175,13 +191,17 @@ struct WelcomeView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.top, Spacing.space4)
                     .padding(.horizontal, Spacing.space6)
-                    .padding(.bottom, Spacing.space6)
+                    .padding(.bottom, Spacing.space3)
 
                 // Pages Container
                 ZStack {
                     TabView(selection: $currentPage) {
                         // Page 0 - Launch
                         VStack(spacing: Spacing.space6) {
+                            PageIndicatorBadge(number: "1a", isActive: currentPage == 0)
+                                .padding(.horizontal, Spacing.space6)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+
                             Spacer()
                             LeaderboardCard().padding(.horizontal, Spacing.space6)
                             Spacer()
@@ -196,6 +216,10 @@ struct WelcomeView: View {
 
                         // Page 1a - Race your friends
                         VStack(spacing: Spacing.space6) {
+                            PageIndicatorBadge(number: "1a", isActive: currentPage == 1)
+                                .padding(.horizontal, Spacing.space6)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+
                             Spacer()
                             LeaderboardCard().padding(.horizontal, Spacing.space6)
                             Spacer()
@@ -210,6 +234,10 @@ struct WelcomeView: View {
 
                         // Page 1b - Steps that count
                         VStack(spacing: Spacing.space6) {
+                            PageIndicatorBadge(number: "1b", isActive: currentPage == 2)
+                                .padding(.horizontal, Spacing.space6)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+
                             Spacer()
                             StepCountDisplay().padding(.horizontal, Spacing.space6)
                             Spacer()
@@ -224,6 +252,10 @@ struct WelcomeView: View {
 
                         // Page 1c - Winner takes the pot
                         VStack(spacing: Spacing.space6) {
+                            PageIndicatorBadge(number: "1c", isActive: currentPage == 3)
+                                .padding(.horizontal, Spacing.space6)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+
                             Spacer()
                             PoolCard().padding(.horizontal, Spacing.space6)
                             Spacer()

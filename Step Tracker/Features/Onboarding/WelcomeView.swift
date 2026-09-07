@@ -21,150 +21,263 @@ func registerCustomFonts() {
     }
 }
 
+// MARK: - Leaderboard Card Component
+struct LeaderboardCard: View {
+    var body: some View {
+        VStack(spacing: 2) {
+            HStack(spacing: Spacing.space3) {
+                Text("1st").font(.labelSmallText).fontWeight(.bold).foregroundStyle(Color.textStrong).frame(width: 26, alignment: .leading)
+                Circle().fill(Color.surfaceSunken).frame(width: 38, height: 38).overlay(Text("🦁").font(.system(size: 20)))
+                Text("Sam").font(.bodyText).fontWeight(.bold).foregroundStyle(Color.textStrong).frame(maxWidth: .infinity, alignment: .leading)
+                Text("14,902").font(.bodyText).fontWeight(.bold).foregroundStyle(Color.textStrong)
+            }
+            .padding(.vertical, 12)
+            .padding(.horizontal, 14)
+            .background(Color.clear)
+            .cornerRadius(BorderRadius.medium)
+
+            HStack(spacing: Spacing.space3) {
+                Text("2nd").font(.labelSmallText).fontWeight(.bold).foregroundStyle(Color.textMuted).frame(width: 26, alignment: .leading)
+                Circle().fill(Color.surfaceSunken).frame(width: 38, height: 38).overlay(Text("🦊").font(.system(size: 20)))
+                Text("You").font(.bodyText).fontWeight(.bold).foregroundStyle(Color.textStrong).frame(maxWidth: .infinity, alignment: .leading)
+                Text("12,438").font(.bodyText).fontWeight(.bold).foregroundStyle(Color.textStrong)
+            }
+            .padding(.vertical, 12)
+            .padding(.horizontal, 14)
+            .background(Color.surfaceSunken)
+            .cornerRadius(BorderRadius.medium)
+
+            HStack(spacing: Spacing.space3) {
+                Text("3rd").font(.labelSmallText).fontWeight(.bold).foregroundStyle(Color.textMuted).frame(width: 26, alignment: .leading)
+                Circle().fill(Color.surfaceSunken).frame(width: 38, height: 38).overlay(Text("🐧").font(.system(size: 20)))
+                Text("Mia").font(.bodyText).fontWeight(.bold).foregroundStyle(Color.textStrong).frame(maxWidth: .infinity, alignment: .leading)
+                Text("9,120").font(.bodyText).fontWeight(.bold).foregroundStyle(Color.textStrong)
+            }
+            .padding(.vertical, 12)
+            .padding(.horizontal, 14)
+            .background(Color.clear)
+            .cornerRadius(BorderRadius.medium)
+
+            Divider().padding(.vertical, 6)
+
+            HStack(spacing: 6) {
+                Image(systemName: "clock.badge.xmark.fill").font(.system(size: 14, weight: .semibold)).foregroundStyle(Color.textMuted)
+                Text("4 days left · $40 pool").font(.captionText).foregroundStyle(Color.textMuted)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 6)
+        }
+        .padding(8)
+        .background(Color.surfaceCard)
+        .cornerRadius(BorderRadius.medium)
+        .cardShadow()
+    }
+}
+
+// MARK: - Step Count Display Component
+struct StepCountDisplay: View {
+    var body: some View {
+        VStack(spacing: 14) {
+            VStack(spacing: 0) {
+                Text("Steps today").font(.overlineText).foregroundStyle(Color.textMuted).frame(maxWidth: .infinity, alignment: .leading)
+                Text("12,438").font(.system(size: 76, weight: .semibold, design: .default)).tracking(-0.01).foregroundStyle(Color.textStrong).frame(maxWidth: .infinity, alignment: .leading).lineLimit(1)
+            }
+
+            HStack(spacing: 8) {
+                HStack(spacing: 6) {
+                    Image(systemName: "arrow.up.right.fill").font(.system(size: 16, weight: .semibold)).foregroundStyle(Color.success)
+                    Text("+2,180 on yesterday").font(.labelSmallText).fontWeight(.bold).foregroundStyle(Color.textStrong)
+                }
+                .padding(.vertical, 7)
+                .padding(.horizontal, 12)
+                .background(Color.surfaceSunken)
+                .cornerRadius(BorderRadius.pill)
+
+                HStack(spacing: 6) {
+                    Image(systemName: "heart.fill").font(.system(size: 16, weight: .semibold)).foregroundStyle(.red)
+                    Text("Apple Health").font(.labelSmallText).fontWeight(.bold).foregroundStyle(Color.textInverse)
+                }
+                .padding(.vertical, 7)
+                .padding(.horizontal, 12)
+                .background(Color.textStrong)
+                .cornerRadius(BorderRadius.pill)
+
+                Spacer()
+            }
+        }
+        .padding(16)
+        .background(Color.surfaceCard)
+        .cornerRadius(BorderRadius.medium)
+        .cardShadow()
+    }
+}
+
+// MARK: - Pool Card Component
+struct PoolCard: View {
+    let accentColor: Color = .sky
+
+    var body: some View {
+        VStack(spacing: 16) {
+            HStack(spacing: 0) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Pool").font(.overlineText).foregroundStyle(Color.textMuted)
+                    Text("$40").font(.system(size: 46, weight: .semibold, design: .default)).tracking(-0.01).foregroundStyle(Color.textStrong).lineLimit(1)
+                }
+
+                Spacer()
+
+                Circle().fill(accentColor).frame(width: 56, height: 56).overlay(
+                    Image(systemName: "trophy.fill").font(.system(size: 28, weight: .semibold)).foregroundStyle(.white)
+                )
+            }
+
+            Divider()
+
+            HStack {
+                Text("Winner takes 90%").font(.bodyText).foregroundStyle(Color.textBody)
+                Spacer()
+                Text("$36").font(.titleText).fontWeight(.bold).foregroundStyle(Color.textStrong)
+            }
+
+            HStack(spacing: 10) {
+                HStack(spacing: -8) {
+                    ForEach(["🦊", "🦁", "🐧", "🐝"], id: \.self) { emoji in
+                        Circle().fill(Color.surfaceSunken).frame(width: 30, height: 30).overlay(Circle().stroke(Color.surfaceCard, lineWidth: 2)).overlay(Text(emoji).font(.system(size: 15)))
+                    }
+                }
+                Spacer()
+                Text("4 players in · settles Sunday").font(.captionText).foregroundStyle(Color.textMuted)
+            }
+        }
+        .padding(20)
+        .background(Color.surfaceCard)
+        .cornerRadius(BorderRadius.medium)
+        .cardShadow()
+    }
+}
+
+// MARK: - Welcome View
 struct WelcomeView: View {
-    @State private var isAnimating = false
+    @State private var currentPage: Int = 0
+    @ObservedObject var authManager: AuthenticationManager
 
     let accentColor: Color = .sky
 
     var body: some View {
         ZStack {
-            Color(.white)
-                .ignoresSafeArea()
+            Color.surfaceCard.ignoresSafeArea()
 
             VStack(spacing: 0) {
-                // Logo - close to safe area
+                // Logo
                 Text("Stept")
-                    .font(.custom("YoungSerif-Regular", size: 22))
-                    .foregroundStyle(Color(red: 0.086, green: 0.075, blue: 0.055))
+                    .font(.titleText)
+                    .foregroundStyle(Color.textStrong)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.top, 16)
-                    .padding(.horizontal, 24)
+                    .padding(.top, Spacing.space4)
+                    .padding(.horizontal, Spacing.space6)
+                    .padding(.bottom, Spacing.space3)
 
-                // Hero Section - Centered with flex
-                VStack(spacing: 0) {
-                    Spacer()
-
-                    ZStack {
-                        // Main Circle
-                        Circle()
-                            .fill(accentColor)
-                            .frame(width: 206, height: 206)
-                            .shadow(color: Color.black.opacity(0.06), radius: 10, x: 0, y: 4)
-
-                        // Hero Icon - Sneaker with pulse animation
-                        Image(systemName: "figure.walk")
-                            .font(.system(size: 98, weight: .semibold))
-                            .foregroundStyle(.white)
-                            .opacity(isAnimating ? 0.7 : 1.0)
-                            .animation(
-                                Animation.easeInOut(duration: 2)
-                                    .repeatForever(autoreverses: true),
-                                value: isAnimating
-                            )
-
-                        // Step Badge (Top-left)
-                        HStack(spacing: 8) {
-                            Image(systemName: "figure.walk")
-                                .font(.system(size: 18, weight: .semibold))
-                                .foregroundStyle(Color(red: 0.122, green: 0.616, blue: 0.416))
-
-                            Text("12,438")
-                                .font(.custom("Figtree-Bold", size: 13))
-                                .foregroundStyle(Color(red: 0.086, green: 0.075, blue: 0.055))
+                // Pages Container
+                ZStack {
+                    TabView(selection: $currentPage) {
+                        // Page 0 - Race your friends
+                        VStack(spacing: Spacing.space6) {
+                            Spacer().frame(height: Spacing.space3)
+                            LeaderboardCard().padding(.horizontal, Spacing.space6)
+                            Spacer()
+                            VStack(spacing: Spacing.space4) {
+                                Text("Race your friends").font(.heroText).fontWeight(.bold).foregroundStyle(Color.textStrong)
+                                Text("Set up a challenge with your crew and watch the leaderboard shuffle every time someone moves.").font(.bodyLargeText).foregroundStyle(Color.textBody).lineLimit(nil).fixedSize(horizontal: false, vertical: true)
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal, Spacing.space6)
                         }
-                        .padding(.vertical, 9)
-                        .padding(.horizontal, 14)
-                        .background(Color(.white))
-                        .cornerRadius(999)
-                        .shadow(color: Color.black.opacity(0.06), radius: 10, x: 0, y: 4)
-                        .offset(x: -120, y: -130)
+                        .tag(0)
 
-                        // Pool Badge (Bottom-right)
-                        HStack(spacing: 8) {
-                            Image(systemName: "trophy.fill")
-                                .font(.system(size: 18, weight: .semibold))
-                                .foregroundStyle(accentColor)
-
-                            Text("$120 pool")
-                                .font(.custom("Figtree-Bold", size: 13))
-                                .foregroundStyle(Color(red: 0.992, green: 0.980, blue: 0.964))
+                        // Page 1 - Steps that count
+                        VStack(spacing: Spacing.space6) {
+                            Spacer().frame(height: Spacing.space3)
+                            StepCountDisplay().padding(.horizontal, Spacing.space6)
+                            Spacer()
+                            VStack(spacing: Spacing.space4) {
+                                Text("Steps that count").font(.heroText).fontWeight(.bold).foregroundStyle(Color.textStrong)
+                                Text("Stept reads your daily step count straight from Apple Health. Nothing to log, nothing to fake.").font(.bodyLargeText).foregroundStyle(Color.textBody).lineLimit(nil).fixedSize(horizontal: false, vertical: true)
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal, Spacing.space6)
                         }
-                        .padding(.vertical, 9)
-                        .padding(.horizontal, 14)
-                        .background(Color(red: 0.086, green: 0.075, blue: 0.055))
-                        .cornerRadius(999)
-                        .shadow(color: Color.black.opacity(0.06), radius: 10, x: 0, y: 4)
-                        .offset(x: 120, y: 116)
+                        .tag(1)
+
+                        // Page 2 - Winner takes the pot
+                        VStack(spacing: Spacing.space6) {
+                            Spacer().frame(height: Spacing.space3)
+                            PoolCard().padding(.horizontal, Spacing.space6)
+                            Spacer()
+                            VStack(spacing: Spacing.space4) {
+                                Text("Winner takes the pot").font(.heroText).fontWeight(.bold).foregroundStyle(Color.textStrong)
+                                Text("Highest total when the clock runs out wins 90% of the pool. The rest is bragging rights.").font(.bodyLargeText).foregroundStyle(Color.textBody).lineLimit(nil).fixedSize(horizontal: false, vertical: true)
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal, Spacing.space6)
+                        }
+                        .tag(2)
                     }
-                    .frame(width: 250, height: 250)
-
-                    Spacer()
+                    .tabViewStyle(.page(indexDisplayMode: .never))
+                    .indexViewStyle(.page(backgroundDisplayMode: .never))
                 }
                 .frame(maxHeight: .infinity)
-                .padding(.bottom, 40)
 
-                // Headline and Description
-                VStack(spacing: 14) {
-                    Text("Turn your steps into stakes")
-                        .font(.custom("YoungSerif-Regular", size: 36))
-                        .fontWeight(.bold)
-                        .foregroundStyle(Color(red: 0.086, green: 0.075, blue: 0.055))
-                        .lineLimit(nil)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .lineSpacing(-2)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-
-                    Text("Challenge your friends, pool a little cash, and let your daily walk decide who takes it all.")
-                        .font(.custom("Figtree-Regular", size: 17))
-                        .foregroundStyle(Color(red: 0.231, green: 0.212, blue: 0.173))
-                        .lineLimit(nil)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                // Error Message
+                if let error = authManager.errorMessage {
+                    HStack(spacing: Spacing.space3) {
+                        Image(systemName: "exclamationmark.circle.fill").foregroundStyle(Color.danger)
+                        Text(error).font(.bodySmallText).foregroundStyle(Color.danger)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.vertical, Spacing.space3)
+                    .padding(.horizontal, Spacing.space4)
+                    .background(Color.surfaceRaised)
+                    .cornerRadius(BorderRadius.small)
+                    .padding(.horizontal, Spacing.space6)
+                    .padding(.bottom, Spacing.space4)
                 }
-                .padding(.horizontal, 24)
-                .padding(.bottom, 16)
+
+                // Page indicator dots
+                HStack(spacing: 8) {
+                    ForEach(0..<3, id: \.self) { index in
+                        Circle()
+                            .fill(index == currentPage ? Color.sky : Color.textFaint)
+                            .frame(width: 8, height: 8)
+                    }
+                }
+                .padding(.top, Spacing.space6)
+                .padding(.bottom, Spacing.space4)
 
                 // CTA Section
-                VStack(spacing: 16) {
-                    Button(action: {}) {
+                VStack(spacing: Spacing.space4) {
+                    Button(action: { authManager.signInWithApple() }) {
                         HStack(spacing: 12) {
-                            Image(systemName: "apple.logo")
-                                .font(.system(size: 20, weight: .semibold))
-                            Text("Sign in with Apple")
-                                .font(.custom("Figtree-Bold", size: 15))
+                            Image(systemName: "apple.logo").font(.system(size: 20, weight: .semibold))
+                            Text("Sign in with Apple").font(.labelText)
                         }
                         .frame(maxWidth: .infinity)
-                        .frame(height: 52)
+                        .frame(height: MeasurementTokens.controlHeight)
                         .foregroundStyle(.white)
-                        .background(Color(red: 0.086, green: 0.075, blue: 0.055))
-                        .cornerRadius(10)
-                        .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(red: 0.086, green: 0.075, blue: 0.055), lineWidth: 2))
+                        .background(Color.textStrong)
+                        .cornerRadius(BorderRadius.small)
+                        .overlay(RoundedRectangle(cornerRadius: BorderRadius.small).stroke(Color.textStrong, lineWidth: 2))
                     }
 
-                    TermsAndConditions(
-                        termsURL: URL(string: "https://example.com/terms")!,
-                        privacyURL: URL(string: "https://example.com/privacy")!
-                    )
-                    .frame(maxWidth: .infinity)
+                    TermsAndConditions(termsURL: URL(string: "https://example.com/terms")!, privacyURL: URL(string: "https://example.com/privacy")!)
+                        .frame(maxWidth: .infinity)
                 }
-                .padding(.horizontal, 24)
+                .padding(.horizontal, Spacing.space6)
+                .padding(.vertical, Spacing.space4)
             }
-        }
-        .onAppear {
-            isAnimating = true
         }
     }
 }
 
-// MARK: - Color Extension for Accent Colors
-extension Color {
-    static let sky = Color(red: 0.239, green: 0.561, blue: 0.816)
-    static let leaf = Color(red: 0.122, green: 0.616, blue: 0.416)
-    static let berry = Color(red: 0.424, green: 0.290, blue: 0.714)
-    static let tomato = Color(red: 0.910, green: 0.333, blue: 0.247)
-    static let yolk = Color(red: 1.0, green: 0.761, blue: 0.200)
-}
-
 #Preview {
-    WelcomeView()
+    WelcomeView(authManager: AuthenticationManager())
 }

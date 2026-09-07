@@ -8,8 +8,14 @@
 import SwiftUI
 
 struct OnboardingView: View {
+    @StateObject private var authManager = AuthenticationManager()
+
     var body: some View {
-        WelcomeView()
+        if authManager.isAuthenticated {
+            SuccessView(fullName: authManager.userFullName, email: authManager.userEmail)
+        } else {
+            WelcomeView(authManager: authManager)
+        }
     }
 }
 

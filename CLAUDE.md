@@ -349,6 +349,9 @@ open Step\ Tracker.xcodeproj
 
 ## Git & Version Control
 
+### ⚠️ IMPORTANT: Claude Commit Policy
+**Never make git commits automatically.** Always wait for explicit user request to commit. After making code changes, provide a summary of what was done and ask if the user wants to commit, rather than committing proactively.
+
 ### Repository
 - **Remote**: `https://github.com/pkarthikr/StepTracker.git` (private)
 - **Main branch**: `main`

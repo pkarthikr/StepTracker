@@ -85,7 +85,7 @@ struct StepCountDisplay: View {
 
             HStack(spacing: 8) {
                 HStack(spacing: 6) {
-                    Image(systemName: "arrow.up.right.fill").font(.system(size: 16, weight: .semibold)).foregroundStyle(Color.success)
+                    Image(systemName: "arrow.up").font(.system(size: 16, weight: .semibold)).foregroundStyle(Color.success)
                     Text("+2,180 on yesterday").font(.labelSmallText).fontWeight(.bold).foregroundStyle(Color.textStrong)
                 }
                 .padding(.vertical, 7)
@@ -214,8 +214,8 @@ struct WelcomeView: View {
                             PoolCard().padding(.horizontal, Spacing.space6)
                             Spacer()
                             VStack(spacing: Spacing.space4) {
-                                Text("Winner takes the pot").font(.heroText).fontWeight(.bold).foregroundStyle(Color.textStrong)
-                                Text("Highest total when the clock runs out wins 90% of the pool. The rest is bragging rights.").font(.bodyLargeText).foregroundStyle(Color.textBody).lineLimit(nil).fixedSize(horizontal: false, vertical: true)
+                                Text("Winner takes it all").font(.heroText).fontWeight(.bold).foregroundStyle(Color.textStrong)
+                                Text("Highest total when the clock runs out wins 90% of the pool. The rest is bragging rights. Every step counts towards your victory.").font(.bodyLargeText).foregroundStyle(Color.textBody).lineLimit(nil).fixedSize(horizontal: false, vertical: true)
                             }
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.horizontal, Spacing.space6)

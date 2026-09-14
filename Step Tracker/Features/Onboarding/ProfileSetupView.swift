@@ -3,6 +3,7 @@ import SwiftUI
 struct ProfileSetupView: View {
     @State private var selectedEmoji = "🦊"
     @State private var displayName = "Jordan Blake"
+    @Binding var onboardingState: OnboardingState
 
     let avatarOptions = ["🦊", "🐧", "🦕", "🐝", "🦁", "🐙", "🦄", "🐸", "🦖", "🐼", "🦉", "🐍"]
 
@@ -92,10 +93,12 @@ struct ProfileSetupView: View {
             }
 
             // Continue Button (Floating)
-            VStack {
+            VStack(spacing: 0) {
                 Spacer()
 
-                Button(action: {}) {
+                Button(action: {
+                    onboardingState = .permissions
+                }) {
                     Text("Continue")
                         .font(.labelText)
                         .foregroundStyle(Color.textInverse)
@@ -104,13 +107,14 @@ struct ProfileSetupView: View {
                         .background(Color.textStrong)
                         .cornerRadius(BorderRadius.pill)
                 }
-                .padding(.horizontal, MeasurementTokens.screenMargin)
-                .padding(.vertical, Spacing.space6)
+                .padding(.horizontal, 24)
+                .padding(.bottom, 16)
             }
         }
     }
 }
 
 #Preview {
-    ProfileSetupView()
+    @State var state: OnboardingState = .profile
+    return ProfileSetupView(onboardingState: $state)
 }

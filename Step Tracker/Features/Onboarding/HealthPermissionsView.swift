@@ -22,14 +22,18 @@ struct HealthPermissionsView: View {
 
                 VStack(spacing: 32) {
                     VStack(spacing: 20) {
-                        Image(systemName: "heart.pulse.fill")
-                            .font(.system(size: 48))
-                            .foregroundStyle(Color(red: 0.910, green: 0.333, blue: 0.247))
-                            .frame(width: 100, height: 100)
-                            .background(
-                                RoundedRectangle(cornerRadius: 24)
-                                    .fill(Color(red: 1.0, green: 0.878, blue: 0.835))
-                            )
+                        HStack {
+                            Image(systemName: "heart.fill")
+                                .font(.system(size: 56, weight: .bold))
+                                .foregroundStyle(Color(red: 0.910, green: 0.333, blue: 0.247))
+                                .frame(width: 100, height: 100)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 24)
+                                        .fill(Color(red: 1.0, green: 0.878, blue: 0.835))
+                                )
+                            Spacer()
+                        }
+                        .padding(.horizontal, 24)
 
                         VStack(spacing: 20) {
                             Text("Connect your steps")
@@ -42,16 +46,19 @@ struct HealthPermissionsView: View {
                                 .foregroundStyle(Color(red: 0.231, green: 0.212, blue: 0.173))
                                 .lineSpacing(1.2)
                         }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal, 24)
                     }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal, 24)
 
-                    VStack(spacing: 12) {
+                    VStack(spacing: 0) {
                         HealthPermissionRow(
-                            icon: "footprints.fill",
+                            icon: "figure.walk",
                             title: "Steps",
                             isEnabled: true
                         )
+
+                        Divider()
+                            .padding(.vertical, 0)
 
                         HealthPermissionRow(
                             icon: "figure.walk",
@@ -59,6 +66,8 @@ struct HealthPermissionsView: View {
                             isEnabled: true
                         )
                     }
+                    .background(Color(red: 0.963, green: 0.945, blue: 0.906))
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
                     .padding(.horizontal, 24)
                 }
 
@@ -92,15 +101,15 @@ struct HealthPermissionRow: View {
     let isEnabled: Bool
 
     var body: some View {
-        HStack(spacing: 16) {
+        HStack(spacing: 12) {
             Image(systemName: icon)
-                .font(.system(size: 24))
+                .font(.system(size: 20))
                 .foregroundStyle(Color(red: 0.122, green: 0.616, blue: 0.416))
-                .frame(width: 32)
 
             Text(title)
-                .font(.custom("Figtree-Bold", size: 17))
+                .font(.custom("Figtree-Bold", size: 15))
                 .foregroundStyle(Color(red: 0.086, green: 0.075, blue: 0.055))
+                .lineLimit(1)
 
             Spacer()
 
@@ -111,10 +120,8 @@ struct HealthPermissionRow: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.vertical, 16)
+        .padding(.vertical, 12)
         .padding(.horizontal, 16)
-        .background(Color(red: 0.963, green: 0.945, blue: 0.906))
-        .clipShape(RoundedRectangle(cornerRadius: 16))
     }
 }
 

@@ -160,6 +160,7 @@ struct PoolCard: View {
 struct WelcomeView: View {
     @State private var currentPage: Int = 0
     @ObservedObject var authManager: AuthenticationManager
+    @Binding var onboardingState: OnboardingState
 
     let accentColor: Color = .sky
 
@@ -254,8 +255,12 @@ struct WelcomeView: View {
                 .padding(.bottom, Spacing.space4)
 
                 // CTA Section
+                Spacer()
+
                 VStack(spacing: Spacing.space4) {
-                    Button(action: { authManager.signInWithApple() }) {
+                    Button(action: {
+                        onboardingState = .profile
+                    }) {
                         HStack(spacing: 12) {
                             Image(systemName: "apple.logo").font(.system(size: 20, weight: .semibold))
                             Text("Sign in with Apple").font(.labelText)
@@ -271,13 +276,14 @@ struct WelcomeView: View {
                     TermsAndConditions(termsURL: URL(string: "https://example.com/terms")!, privacyURL: URL(string: "https://example.com/privacy")!)
                         .frame(maxWidth: .infinity)
                 }
-                .padding(.horizontal, Spacing.space6)
-                .padding(.vertical, Spacing.space4)
+                .padding(.horizontal, 24)
+                .padding(.bottom, 16)
             }
         }
     }
 }
 
 #Preview {
-    WelcomeView(authManager: AuthenticationManager())
+    @State var state: OnboardingState = .welcome
+    return WelcomeView(authManager: AuthenticationManager(), onboardingState: $state)
 }

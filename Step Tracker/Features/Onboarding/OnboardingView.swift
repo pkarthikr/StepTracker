@@ -9,12 +9,13 @@ import SwiftUI
 
 struct OnboardingView: View {
     @StateObject private var authManager = AuthenticationManager()
+    @State private var onboardingState: OnboardingState = .welcome
 
     var body: some View {
         if authManager.isAuthenticated {
             SuccessView(fullName: authManager.userFullName, email: authManager.userEmail)
         } else {
-            WelcomeView(authManager: authManager)
+            WelcomeView(authManager: authManager, onboardingState: $onboardingState)
         }
     }
 }

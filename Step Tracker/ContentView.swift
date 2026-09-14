@@ -8,9 +8,18 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var onboardingState: OnboardingState = .welcome
+    @StateObject private var authManager = AuthenticationManager()
+
     var body: some View {
-//        SplashView()
-        ProfileSetupView()
+        switch onboardingState {
+        case .welcome:
+            WelcomeView(authManager: authManager, onboardingState: $onboardingState)
+        case .profile:
+            ProfileSetupView(onboardingState: $onboardingState)
+        case .permissions:
+            HealthPermissionsView()
+        }
     }
 }
 
